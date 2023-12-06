@@ -46,18 +46,7 @@ app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
 
-// auth middleware for role
-const auth = (req, res, next) => {
-    // tidak ada role = belum terdaftar
-    if (!req.user || !req.user.role) {
-        return res.redirect('/login');
-        // return res.status(403).json({ error: 'Unauthorized' });
-    }
-    else {
-        next();
-        // return res.redirect('/');
-    }
-}
+import auth from './App-module/Auth'
 
 app.get('/login', async (req, res) => {
     res.render('login', { errorMsg: null, success: null });
@@ -90,3 +79,50 @@ app.post('/login', (req, res) => {
 app.get('/', auth, async (res, req) => {
     res.render('home');
 })
+app.get('/insert-data', auth, async (res, req) => {
+    res.render('insert-data');
+})
+
+import importData from './App-module/insert-data'
+
+
+// Handle CSV file upload and data insertion
+app.post('/upload', upload.single('csvFile'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.render('/insert-data', { errMessage: "No file uploaded!" });
+        }
+
+        // Process the uploaded CSV file
+        const fileBuffer = req.file.buffer.toString('utf-8');
+        const rows = fileBuffer.split('\n');
+
+        // Assuming the CSV header is present in the first row
+        const header = rows[0].split(';');
+
+        // Create a map to store column indexes
+        const columnIndexMap = {};
+        header.forEach((col, index) => {
+            columnIndexMap[col.trim()] = index;
+        });
+
+        // Process each data row
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i].split(';');
+            const rowData = {};
+
+            // Map data to column names
+            Object.keys(columnIndexMap).forEach((col) => {
+                rowData[col] = row[columnIndexMap[col]].trim();
+            });
+
+            // Insert data into MySQL tables
+            await importData(rowData);
+        }
+
+        return res.status(200).send('CSV file processed and data inserted into MySQL tables.');
+    } catch (error) {
+        console.error('Error processing CSV file:', error);
+        return res.status(500).send('Internal Server Error.');
+    }
+});
