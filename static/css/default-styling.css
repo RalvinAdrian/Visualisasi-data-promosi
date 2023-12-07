@@ -1,89 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-/* Start styling */
 * {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
+  box-sizing: border-box;
 }
-
-/* Jika a link tidak ada class reset warnanya jadi hitam */
-a:is([class]) {
-  color: black;
+body {
+  font-family: 'Open Sans';
+  background: #2c3e50;
+  color: #ecf0f1;
+  line-height: 1.618em;
 }
-
-/* Default link color */
-a {
-  color: #0038ff;
-  margin-right: 1rem;
+.wrapper {
+  max-width: 50rem;
+  width: 100%;
+  margin: 0 auto;
 }
-button,
-a {
-  font-weight: 450;
+.tabs {
+  position: relative;
+  margin: 3rem 0;
+  background: #1abc9c;
+  height: 14.75rem;
 }
-
-a:last-child {
-  margin: 0;
+.tabs::before,
+.tabs::after {
+  content: '';
+  display: table;
 }
-.hidden {
-  display: none !important;
+.tabs::after {
+  clear: both;
 }
-
-.brandName {
-  /* 24px */
-  font-size: 1.5rem;
-  font-weight: 700;
+.tab {
+  float: left;
 }
-a {
-  list-style: none;
+.tab-switch {
+  display: none;
 }
-
-#SignInButton:hover {
-  padding: 0.4rem;
-  color: white;
-  background-color: black;
-  border: 1px solid white;
-  border-radius: 0.5rem;
-  margin-right: 0;
+.tab-label {
+  position: relative;
+  display: block;
+  line-height: 2.75em;
+  height: 3em;
+  padding: 0 1.618em;
+  background: #1abc9c;
+  border-right: 0.125rem solid #16a085;
+  color: #fff;
+  cursor: pointer;
+  top: 0;
+  transition: all 0.25s;
 }
-#SignInButton {
-  padding: 0.4rem;
-  color: black;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 0.5rem;
-  margin-right: 0;
+.tab-label:hover {
+  top: -0.25rem;
+  transition: top 0.25s;
 }
-
-#wrapper {
-  display: grid;
-  grid-template-columns: 20vw 80vh;
+.tab-content {
+  height: 12rem;
+  position: absolute;
+  z-index: 1;
+  top: 2.75em;
+  left: 0;
+  padding: 1.618rem;
+  background: #fff;
+  color: #2c3e50;
+  border-bottom: 0.25rem solid #bdc3c7;
+  opacity: 0;
+  transition: all 0.35s;
 }
-
-#left-sidebar {
-  padding: 1rem;
-  height: 100vh;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-right: 2px solid rgb(0, 0, 0);
+.tab-switch:checked + .tab-label {
+  background: #fff;
+  color: #2c3e50;
+  border-bottom: 0;
+  border-right: 0.125rem solid #fff;
+  transition: all 0.35s;
+  z-index: 1;
+  top: -0.0625rem;
 }
-
-#left-sidebar > :nth-child(1) {
-  margin-bottom: 2rem;
-}
-.links-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.menu-routing {
-  margin: 1rem 0;
-  padding: 0.4rem;
-  text-align: center;
-  border: 2px solid black;
-  border-radius: 10px;
-  max-width: fit-content;
-  display: flex;
+.tab-switch:checked + label + .tab-content {
+  z-index: 2;
+  opacity: 1;
+  transition: all 0.35s;
 }
