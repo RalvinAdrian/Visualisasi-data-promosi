@@ -34,10 +34,10 @@ app.get('/insert-data', async (req, res) => {
 // import importData from 'insert-data.js'
 
 // Handle CSV file upload and data insertion
-app.post('/upload', async (req, res) => {
+app.post('/upload-csv', async (req, res) => {
     try {
         if (!req.file) {
-            return res.render('/insert-data', { errMessage: "No file uploaded!" });
+            return res.render('insert-data', { errMessage: "No file uploaded!" });
         }
 
         // Process the uploaded CSV file
@@ -67,9 +67,9 @@ app.post('/upload', async (req, res) => {
             await importData(rowData);
         }
 
-        return res.status(200).send('CSV file processed and data inserted into MySQL tables.');
+        // Redirect to home with success message
+        return res.render('home');
     } catch (error) {
-        console.error('Error processing CSV file:', error);
-        return res.status(500).send('Internal Server Error.');
+        return res.status(500).send('Gagal memproses file csv');
     }
 });
