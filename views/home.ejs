@@ -1,38 +1,243 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualisasi Data Promosi</title>
-    <link rel="stylesheet" href="../css/default-styling.css">
-</head>
-
-<body>
-    <div class="wrapper">
-        <div class="tabs">
-            <div class="tab">
-                <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
-                <label for="tab-1" class="tab-label">Visualisasi data</label>
-                <div class="tab-content">My father had a small estate in Nottinghamshire: I was the third of five sons.
-                    He
-                    sent me to Emanuel College in Cambridge at fourteen years old, where I resided three years, and
-                    applied
-                    myself close to my studies; but the charge of maintaining me, although I had a very scanty
-                    allowance,
-                    being too great for a narrow fortune, I was bound apprentice to Mr. James Bates, an eminent surgeon
-                    in
-                    London, with whom I continued four years. </div>
-            </div>
-            <div class="tab">
-                <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
-                <label for="tab-2" class="tab-label">Insert CSV</label>
-                <div class="tab-content">
-                    <form action="/upload-csv" method="post">
-                        <h2>Upload Data</h2>
-                        <input type="file" name="fileUpl" id="upload-csv">
-                        <input type="submit" value="Submit Data">
-                    </form>
-                </div>
-            </div>
+<div class="div">
+    <div class="div-2">
+      <div class="div-3">
+        <div class="div-4">
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6071372e13810f65ecec85d52f96fb48906b09d135bc111b19624d0389062a?"
+            class="img"
+          />
+          <div class="div-5">Jovirian</div>
         </div>
-        <p>Tugas Besar 2 Manajemen Proyek - Visualisasi Data promosi</p>
+        <div class="div-6">Dashboard</div>
+      </div>
+      <div class="div-7">
+        <div class="div-8">
+          <div class="column">
+            <div class="div-9">
+              <div class="div-10">Hi ! Selamat Datang !</div>
+              <div class="div-11">Jovirian</div>
+              <div class="div-12">Hadir untuk membantu anda</div>
+              <div class="div-13">Masukkan File CSV</div>
+            </div>
+          </div>
+          <div class="column-2">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/2e4a1382f3c792615ca1460c8407e557c9b54f588f4396603afdc8cb696070c2?"
+              class="img-2"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </div>
+  <style>
+    .div {
+      border-radius: 30px;
+      box-shadow: 20px 30px 100px 0px rgba(0, 0, 0, 0.25);
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .div-2 {
+      background-color: #fff;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 80px;
+    }
+    @media (max-width: 991px) {
+      .div-2 {
+        max-width: 100%;
+        padding: 0 20px;
+      }
+    }
+    .div-3 {
+      display: flex;
+      margin-top: 9px;
+      width: 100%;
+      max-width: 1700px;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    @media (max-width: 991px) {
+      .div-3 {
+        max-width: 100%;
+        flex-wrap: wrap;
+      }
+    }
+    .div-4 {
+      display: flex;
+      margin-top: 26px;
+      gap: 19px;
+    }
+    .img {
+      aspect-ratio: 1;
+      object-fit: contain;
+      object-position: center;
+      width: 56px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .div-5 {
+      color: #414042;
+      align-self: center;
+      width: 255px;
+      margin: auto 0;
+      font: 700 45px Poppins, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-5 {
+        font-size: 40px;
+      }
+    }
+    .div-6 {
+      color: #fff;
+      white-space: nowrap;
+      border-radius: 80px;
+      box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.25);
+      background-color: #38a755;
+      align-self: stretch;
+      flex-grow: 1;
+      justify-content: center;
+      align-items: start;
+      padding: 35px 60px;
+      font: 700 30px Poppins, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-6 {
+        white-space: initial;
+        padding: 0 20px 0 30px;
+      }
+    }
+    .div-7 {
+      width: 100%;
+      max-width: 1700px;
+      margin: 168px 0 100px;
+    }
+    @media (max-width: 991px) {
+      .div-7 {
+        max-width: 100%;
+        padding-right: 20px;
+        margin: 40px 0;
+      }
+    }
+    .div-8 {
+      gap: 20px;
+      display: flex;
+    }
+    @media (max-width: 991px) {
+      .div-8 {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0px;
+      }
+    }
+    .column {
+      display: flex;
+      flex-direction: column;
+      line-height: normal;
+      width: 53%;
+      margin-left: 0px;
+    }
+    @media (max-width: 991px) {
+      .column {
+        width: 100%;
+      }
+    }
+    .div-9 {
+      display: flex;
+      margin-top: 38px;
+      flex-direction: column;
+    }
+    @media (max-width: 991px) {
+      .div-9 {
+        max-width: 100%;
+        margin-top: 40px;
+      }
+    }
+    .div-10 {
+      color: #686868;
+      font: 700 45px Poppins, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-10 {
+        max-width: 100%;
+        font-size: 40px;
+      }
+    }
+    .div-11 {
+      color: #000;
+      margin-top: 29px;
+      font: 700 100px Poppins, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-11 {
+        max-width: 100%;
+        font-size: 40px;
+      }
+    }
+    .div-12 {
+      color: #686868;
+      margin-top: 45px;
+      font: 500 40px Poppins, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-12 {
+        max-width: 100%;
+        margin-top: 40px;
+      }
+    }
+    .div-13 {
+      color: #fff;
+      max-width: 532px;
+      border-radius: 0px 0px 100px 0px;
+      box-shadow: 10px 20px 50px 0px rgba(0, 0, 0, 0.25);
+      background-color: #38a755;
+      margin-top: 160px;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 60px 53px;
+      font: 700 48px Poppins, sans-serif;
+    }
+    @media (max-width: 991px) {
+      .div-13 {
+        max-width: 100%;
+        font-size: 40px;
+        margin-top: 40px;
+        padding: 0 20px;
+      }
+    }
+    .column-2 {
+      display: flex;
+      flex-direction: column;
+      line-height: normal;
+      width: 47%;
+      margin-left: 20px;
+    }
+    @media (max-width: 991px) {
+      .column-2 {
+        width: 100%;
+      }
+    }
+    .img-2 {
+      aspect-ratio: 1.29;
+      object-fit: contain;
+      object-position: center;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      flex-grow: 1;
+    }
+    @media (max-width: 991px) {
+      .img-2 {
+        max-width: 100%;
+        margin-top: 40px;
+      }
+    }
+  </style>
