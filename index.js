@@ -4,9 +4,8 @@ import bodyParser from 'body-parser';
 
 const app = express();
 const port = 8005;
-const publicPath = path.resolve('static');
 
-app.use(express.static(publicPath));
+app.use(express.static('static'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
