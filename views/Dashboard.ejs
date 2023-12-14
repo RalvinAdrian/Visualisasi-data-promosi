@@ -29,6 +29,30 @@
 
     <div class="bar-chart" id="barChart">
         <!-- Bar chart will be dynamically generated here -->
+        <canvas id="bChart"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          const ctx = document.getElementById('bChart');
+        
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+              datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        </script>
     </div>
 
     <div class="select-container">
@@ -55,6 +79,42 @@
 
     <div class="scatter-plot" id="scatterPlot">
         <!-- Scatter plot will be dynamically generated here -->
+        <canvas id="sChart"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          const ctx2 = document.getElementById('sChart');
+        
+          new Chart(ctx2, {
+            type: 'scatter',
+            data: {
+            datasets: [{
+                label: 'Scatter Dataset',
+                data: [{
+                    x: -10,
+                    y: 0
+                }, {
+                    x: 0,
+                    y: 10
+                }, {
+                    x: 10,
+                    y: 5
+                }, {
+                    x: 0.5,
+                    y: 5.5
+                }],
+                backgroundColor: 'rgb(255, 99, 132)'
+            }],
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    }
+                }
+            }
+          });
+        </script>
     </div>
 </div>
 
