@@ -1,38 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualisasi Data Promosi</title>
-    <link rel="stylesheet" href="../css/default-styling.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/reset.css">
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="tabs">
-            <div class="tab">
-                <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
-                <label for="tab-1" class="tab-label">Visualisasi data</label>
-                <div class="tab-content">My father had a small estate in Nottinghamshire: I was the third of five sons.
-                    He
-                    sent me to Emanuel College in Cambridge at fourteen years old, where I resided three years, and
-                    applied
-                    myself close to my studies; but the charge of maintaining me, although I had a very scanty
-                    allowance,
-                    being too great for a narrow fortune, I was bound apprentice to Mr. James Bates, an eminent surgeon
-                    in
-                    London, with whom I continued four years. </div>
-            </div>
-            <div class="tab">
-                <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
-                <label for="tab-2" class="tab-label">Insert CSV</label>
-                <div class="tab-content">
-                    <form action="/upload-csv" method="post">
-                        <h2>Upload Data</h2>
-                        <input type="file" name="fileUpl" id="upload-csv">
-                        <input type="submit" value="Submit Data">
-                    </form>
-                </div>
-            </div>
-        </div>
-        <p>Tugas Besar 2 Manajemen Proyek - Visualisasi Data promosi</p>
+  <header>
+    <div id="branding">
+      <img loading="lazy"
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6071372e13810f65ecec85d52f96fb48906b09d135bc111b19624d0389062a?"
+        class="img" />
+      <h1>Visualisasi Data Promosi</h1>
     </div>
+    <a href="/dashboard" id="dashboard-button">Dashboard</a>
+  </header>
+
+  <section id="main">
+    <div class="left-col">
+      <h1 class="title">Halo, silahkan masukan data baru di form berikut :</h1>
+      <div class="form-container">
+        <form action="/upload-csv" method="post" id="upload-data">
+          <!-- <input type="file" id="fileInput" accept=".csv" />
+                -->
+          <label for="csv" class="drop-container" id="dropcontainer">
+            <span class="drop-title">Drop file csv</span>
+            Atau cari file :
+            <div class="container">
+              <input type="file" id="csv" accept=".csv" required>
+              <input type="submit" value="Upload data">
+            </div>
+          </label>
+        </form>
+      </div>
+      <h3 class="informasi-tambahan">
+        Atau langsung masuk ke <a href="/dashboard" target="_blank" rel="noopener noreferrer">
+          Dashboard
+        </a>
+      </h3>
+
+    </div>
+    <div class="right-col">
+      <img loading="lazy"
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/2e4a1382f3c792615ca1460c8407e557c9b54f588f4396603afdc8cb696070c2?"
+        class="img-2" />
+    </div>
+  </section>
 </body>
+
+</html>
