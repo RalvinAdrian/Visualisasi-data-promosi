@@ -72,3 +72,7 @@ app.post('/upload-csv', async (req, res) => {
         return res.status(500).send('Gagal memproses file csv');
     }
 });
+
+app.get('/dashboard', async (req, res) => {
+    res.render('Dashboard');
+})
