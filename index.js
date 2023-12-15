@@ -101,7 +101,6 @@ app.post('/upload-csv', upload.single('csv'), async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-});
 
 app.get('/dashboard', async (req, res) => {
     res.render('Dashboard');
