@@ -21,23 +21,21 @@
 
   <section id="main">
     <div class="left-col">
-      <h1 class="title">Halo, silahkan masukan data baru di form berikut :</h1>
+      <h1 class="title">Selamat datang, silahkan masukan data baru di form berikut :</h1>
       <div class="form-container">
-        <form action="/upload-csv" method="post" id="upload-data">
-          <!-- <input type="file" id="fileInput" accept=".csv" />
-                -->
+        <form action="/upload-csv" method="post" id="upload-data" enctype="multipart/form-data">
           <label for="csv" class="drop-container" id="dropcontainer">
             <span class="drop-title">Drop file csv</span>
             Atau cari file :
             <div class="container">
-              <input type="file" id="csv" accept=".csv" required>
+              <input type="file" id="csv" name="csv" accept=".csv" required>
               <input type="submit" value="Upload data">
             </div>
           </label>
         </form>
       </div>
       <h3 class="informasi-tambahan">
-        Atau langsung masuk ke <a href="/dashboard" target="_blank" rel="noopener noreferrer">
+        Atau masuk ke <a href="/dashboard" target="_blank" rel="noopener noreferrer">
           Dashboard
         </a>
       </h3>
@@ -50,5 +48,38 @@
     </div>
   </section>
 </body>
+<script>
+  document.getElementById('upload-data').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const fileInput = document.getElementById('csv');
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert('Please select a file.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('csv', file);
+
+    try {
+      const response = await fetch('/upload-csv', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Data uploaded successfully!');
+      } else {
+        alert('Error uploading data.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+</script>
 
 </html>

@@ -9,15 +9,6 @@ app.use(express.static('static'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-import mysql from 'mysql';
-// MySQL Connection
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'dbmanpro'
-});
-
 app.listen(port, () => {
     console.log('App started');
     console.log(`Server running on http://localhost:${port}`);
@@ -26,51 +17,90 @@ app.listen(port, () => {
 app.get('/', async (req, res) => {
     res.render('home');
 })
-app.get('/insert-data', async (req, res) => {
-    res.render('insert-data');
-})
 
-// import importData from 'insert-data.js'
-
+import mysql from 'mysql';
 // Handle CSV file upload and data insertion
-app.post('/upload-csv', async (req, res) => {
+import { parse } from 'csv-parse'
+import multer from 'multer';
+const upload = multer({ dest: 'uploads/' });
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'dbmanpro'
+});
+
+async function insertData(record) {
+    // Insert data into constants table
+    await executeQuery('INSERT INTO constants (Z_CostContact, Z_Revenue) VALUES (?, ?)', [record.Z_CostContact, record.Z_Revenue]);
+
+    // Insert data into people table
+    await executeQuery('INSERT INTO people (ID, Year_Birth, Education, Marital_Status, Income, Kidhome, Teenhome, Dt_Customer, Recency, Complain) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [record.ID, record.Year_Birth, record.Education, record.Marital_Status, record.Income, record.Kidhome, record.Teenhome, record.Dt_Customer, record.Recency, record.Complain]);
+
+    // Insert data into place table
+    await executeQuery('INSERT INTO place (ID, NumWebPurchases, NumCatalogPurchases, NumStorePurchases, NumWebVisitsMonth) VALUES (?, ?, ?, ?, ?)',
+        [record.ID, record.NumWebPurchases, record.NumCatalogPurchases, record.NumStorePurchases, record.NumWebVisitsMonth]);
+
+    // Insert data into products table
+    await executeQuery('INSERT INTO products (ID, MntWines, MntFruits, MntMeatProducts, MntFishProducts, MntSweetProducts, MntGoldProds) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [record.ID, record.MntWines, record.MntFruits, record.MntMeatProducts, record.MntFishProducts, record.MntSweetProducts, record.MntGoldProds]);
+
+    // Insert data into promotion table
+    await executeQuery('INSERT INTO promotion (ID, NumDealsPurchases, AcceptedCmp1, AcceptedCmp2, AcceptedCmp3, AcceptedCmp4, AcceptedCmp5, Response) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [record.ID, record.NumDealsPurchases, record.AcceptedCmp1, record.AcceptedCmp2, record.AcceptedCmp3, record.AcceptedCmp4, record.AcceptedCmp5, record.Response]);
+}
+
+async function executeQuery(sql, values) {
+    return new Promise((resolve, reject) => {
+        pool.query(sql, values, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+// Handling the file upload and data insertion
+app.post('/upload-csv', upload.single('csv'), async (req, res) => {
     try {
         if (!req.file) {
-            return res.render('insert-data', { errMessage: "No file uploaded!" });
+            return res.status(400).json({ error: 'No file uploaded.' });
         }
 
-        // Process the uploaded CSV file
-        const fileBuffer = req.file.buffer.toString('utf-8');
-        const rows = fileBuffer.split('\n');
+        const csvData = req.file.buffer.toString('utf8');
 
-        // Assuming the CSV header is present in the first row
-        const header = rows[0].split(';');
-
-        // Create a map to store column indexes
-        const columnIndexMap = {};
-        header.forEach((col, index) => {
-            columnIndexMap[col.trim()] = index;
+        // Parse CSV data
+        const records = await new Promise((resolve, reject) => {
+            const parsedData = [];
+            parse(csvData, {
+                delimiter: '\t', // Assuming tab-separated values
+                columns: true,
+            })
+                .on('data', (record) => {
+                    parsedData.push(record);
+                })
+                .on('end', () => {
+                    resolve(parsedData);
+                })
+                .on('error', (error) => {
+                    reject(error);
+                });
         });
 
-        // Process each data row
-        for (let i = 1; i < rows.length; i++) {
-            const row = rows[i].split(';');
-            const rowData = {};
-
-            // Map data to column names
-            Object.keys(columnIndexMap).forEach((col) => {
-                rowData[col] = row[columnIndexMap[col]].trim();
-            });
-
-            // Insert data into MySQL tables
-            await importData(rowData);
+        // Insert data into MySQL tables
+        for (const record of records) {
+            await insertData(record);
         }
 
-        // Redirect to home with success message
-        return res.render('home');
+        // Respond with success
+        res.status(200).json({ success: true });
     } catch (error) {
-        return res.status(500).send('Gagal memproses file csv');
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
+});
 });
 
 app.get('/dashboard', async (req, res) => {
