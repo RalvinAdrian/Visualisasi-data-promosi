@@ -1,5 +1,4 @@
 import express from 'express';
-import path from 'path';
 import bodyParser from 'body-parser';
 
 const app = express();
@@ -27,33 +26,11 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'dbmanpro'
+    database: 'dbmanpro-baru'
 });
-
-async function insertData(record) {
-    // Insert data into constants table
-    await executeQuery('INSERT INTO constants (Z_CostContact, Z_Revenue) VALUES (?, ?)', [record.Z_CostContact, record.Z_Revenue]);
-
-    // Insert data into people table
-    await executeQuery('INSERT INTO people (ID, Year_Birth, Education, Marital_Status, Income, Kidhome, Teenhome, Dt_Customer, Recency, Complain) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [record.ID, record.Year_Birth, record.Education, record.Marital_Status, record.Income, record.Kidhome, record.Teenhome, record.Dt_Customer, record.Recency, record.Complain]);
-
-    // Insert data into place table
-    await executeQuery('INSERT INTO place (ID, NumWebPurchases, NumCatalogPurchases, NumStorePurchases, NumWebVisitsMonth) VALUES (?, ?, ?, ?, ?)',
-        [record.ID, record.NumWebPurchases, record.NumCatalogPurchases, record.NumStorePurchases, record.NumWebVisitsMonth]);
-
-    // Insert data into products table
-    await executeQuery('INSERT INTO products (ID, MntWines, MntFruits, MntMeatProducts, MntFishProducts, MntSweetProducts, MntGoldProds) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [record.ID, record.MntWines, record.MntFruits, record.MntMeatProducts, record.MntFishProducts, record.MntSweetProducts, record.MntGoldProds]);
-
-    // Insert data into promotion table
-    await executeQuery('INSERT INTO promotion (ID, NumDealsPurchases, AcceptedCmp1, AcceptedCmp2, AcceptedCmp3, AcceptedCmp4, AcceptedCmp5, Response) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [record.ID, record.NumDealsPurchases, record.AcceptedCmp1, record.AcceptedCmp2, record.AcceptedCmp3, record.AcceptedCmp4, record.AcceptedCmp5, record.Response]);
-}
-
-async function executeQuery(sql, values) {
+function queryAsync(query) {
     return new Promise((resolve, reject) => {
-        pool.query(sql, values, (error, results) => {
+        pool.query(query, (error, results) => {
             if (error) {
                 reject(error);
             } else {
@@ -62,6 +39,7 @@ async function executeQuery(sql, values) {
         });
     });
 }
+
 // Handling the file upload and data insertion
 app.post('/upload-csv', upload.single('csv'), async (req, res) => {
     try {
@@ -75,7 +53,7 @@ app.post('/upload-csv', upload.single('csv'), async (req, res) => {
         const records = await new Promise((resolve, reject) => {
             const parsedData = [];
             parse(csvData, {
-                delimiter: '\t', // Assuming tab-separated values
+                delimiter: ';',
                 columns: true,
             })
                 .on('data', (record) => {
@@ -88,8 +66,6 @@ app.post('/upload-csv', upload.single('csv'), async (req, res) => {
                     reject(error);
                 });
         });
-
-        // Insert data into MySQL tables
         for (const record of records) {
             await insertData(record);
         }
@@ -102,6 +78,41 @@ app.post('/upload-csv', upload.single('csv'), async (req, res) => {
     }
 });
 
-app.get('/dashboard', async (req, res) => {
-    res.render('Dashboard');
+app.get('/chart', async (req, res) => {
+    res.render('chart');
 })
+
+app.get('/summary', async (req, res) => {
+    let infoPengeluaran = await getPengeluaranProduk();
+    let sourcePenjualan = await getSourcePenjualan();
+    res.render('summary', { infoPengeluaran, sourcePenjualan });
+})
+
+async function getPengeluaranProduk() {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT SUM(MntWines) AS Wine, SUM(MntFruits) AS Buah, SUM(MntMeatProducts) AS Daging, SUM(MntFishProducts) AS Ikan, SUM(MntSweetProducts) AS Sweets, SUM(MntGoldProds) AS Emas FROM marketingdata;`;
+        pool.query(query, (error, results) => {
+            if (error) {
+                console.error(error);
+                reject(error);
+                return;
+            }
+            resolve(results[0]);
+        });
+    })
+}
+
+async function getSourcePenjualan() {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT AVG(NumWebPurchases) AS "Penjualan dari Web", AVG(NumCatalogPurchases) AS "Penjualan dari Katalog", AVG(NumStorePurchases) AS "Penjualan dari Toko" FROM marketingdata; `;
+        pool.query(query, (error, results) => {
+            if (error) {
+                console.error(error);
+                reject(error);
+                return;
+            }
+            resolve(results[0]);
+            console.log(results[0]);
+        });
+    })
+}
