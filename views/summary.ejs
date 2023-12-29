@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Data</title>
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/summary.css">
+</head>
+
+<body>
+    <header>
+        <div id="branding">
+            <img loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6071372e13810f65ecec85d52f96fb48906b09d135bc111b19624d0389062a?"
+                class="img" />
+            <h1>Visualisasi Data Promosi</h1>
+        </div>
+        <nav id="nav-menu">
+            <a href="/summary" id="nav-btn">Summary</a>
+            <a href="/chart" id="nav-btn">Chart</a>
+            <a href="/" id="nav-btn">Home</a>
+        </nav>
+    </header>
+
+    <section id="summary">
+        <h1 class="title">Summary Informasi Penjualan</h1>
+        <div class="stats-row">
+            <div class="stat-items">
+                <p>
+                    334
+                </p>
+                <h2>Jumlah Respons balasan dari tawaran</h2>
+            </div>
+            <div class="stat-items">
+                <p>
+                    52247
+                </p>
+                <h2>Rata-rata income dalam US Dollar</h2>
+            </div>
+            <div class="stat-items">
+                <p>
+                    21
+                </p>
+                <h2>Jumlah Komplain</h2>
+            </div>
+            <div class="stat-items">
+                <p>
+                    49 Day
+                </p>
+                <h2>Rata-rata Waktu sejak Pembelian Terakhir</h2>
+            </div>
+        </div>
+    </section>
+    <section id="rekap-data">
+        <div class="stats-row">
+            <div class="info">
+                <h2>Jumlah Biaya produk</h2>
+                <table>
+                    <tr>
+                        <th>Product</th>
+                        <th>Amount</th>
+                    </tr>
+                    <% if (infoPengeluaran !=null) { %>
+                        <% Object.entries(infoPengeluaran).forEach(([product, amount])=> { %>
+                            <tr>
+                                <td>
+                                    <%= product %>
+                                </td>
+                                <td>
+                                    <%= amount %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="2">Data tidak ditemukan</td>
+                                    </tr>
+                                    <% } %>
+                </table>
+            </div>
+            <div class="info">
+                <h2>Rata-rata penjualan dari sumber</h2>
+                <table>
+                    <tr>
+                        <th>Purchase Type</th>
+                        <th>Average</th>
+                    </tr>
+                    <% Object.entries(sourcePenjualan).forEach(([purchaseType, average])=> { %>
+                        <tr>
+                            <td>
+                                <%= purchaseType %>
+                            </td>
+                            <td>
+                                <%= average %>
+                            </td>
+                        </tr>
+                        <% }); %>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
