@@ -6,6 +6,8 @@ const port = 8005;
 
 app.use(express.static('static'));
 app.set('view engine', 'ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(port, () => {
@@ -113,6 +115,39 @@ async function getSourcePenjualan() {
             }
             resolve(results[0]);
             console.log(results[0]);
+        });
+    })
+}
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
+app.post('/updateBarchart', async (req, res) => {
+    const horizontalAxis = req.body.horizontalAxis;
+    const operation = req.body.operation;
+    const verticalAxis = req.body.verticalAxis;
+
+    // buat querynya :
+    const query = `
+    SELECT ${horizontalAxis}, ${operation}(${verticalAxis}) 
+    FROM marketingdata
+    GROUP BY ${horizontalAxis}
+    ORDER BY ${horizontalAxis}`
+
+    let barData = await getBarChartData(query);
+    // ini kirim ke frontend bentuk jSON, process dari frontend
+    res.render('chart', { data: barData });
+})
+
+async function getBarChartData(query) {
+    return new Promise((resolve, reject) => {
+        pool.query(query, (error, results) => {
+            console.log(results)
+            if (error) {
+                console.error(error);
+                reject(error);
+                return;
+            }
+            resolve(results);
         });
     })
 }
