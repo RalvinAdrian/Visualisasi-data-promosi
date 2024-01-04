@@ -160,26 +160,58 @@ async function getBarChartData(query) {
         });
     })
 }
+
+app.post('/updateScatterplot', async (req, res) => {
+    const horizontalAxis = req.body.horizontalAxis;
+    const operation = req.body.operation;
+    const verticalAxis = req.body.verticalAxis;
+
+    // buat querynya :
+    const query = `
+    SELECT ${horizontalAxis}, ${verticalAxis}
+    FROM marketingdata`
+
+    let scatterData = await getScatterplotData(query);
+    // ini kirim ke frontend bentuk jSON, process dari frontend
+    res.json({ data: scatterData });
+})
+
+async function getScatterplotData(query) {
+    return new Promise((resolve, reject) => {
+        pool.query(query, (error, results) => {
+            // console.log(results)
+            if (error) {
+                console.error(error);
+                reject(error);
+                return;
+            }
+            resolve(results);
+        });
+    })
+}
+
+
+
 // Fungsi untuk mengambil data dari database untuk bar chart pada summary
 async function getDataForBarChart() {
     return new Promise((resolve, reject) => {
-      const query = `
+        const query = `
         SELECT BirthDate, SUM(Income) as totalIncome
         FROM marketingdata
         GROUP BY BirthDate
         ORDER BY BirthDate
       `;
-      pool.query(query, (error, results) => {
-        if (error) {
-          console.error(error);
-          reject(error);
-          return;
-        }
-        resolve(results);
-      });
+        pool.query(query, (error, results) => {
+            if (error) {
+                console.error(error);
+                reject(error);
+                return;
+            }
+            resolve(results);
+        });
     });
-  }
-  async function getExpensesData() {
+}
+async function getExpensesData() {
     return new Promise((resolve, reject) => {
         const query = `
             SELECT
@@ -251,17 +283,17 @@ async function getAverageSalesData() {
     });
 }
 
-  
-  // Rute untuk mengambil data bar chart
-  app.get('/api/bar-chart-data', async (req, res) => {
+
+// Rute untuk mengambil data bar chart
+app.get('/api/bar-chart-data', async (req, res) => {
     try {
-      const barChartData = await getDataForBarChart();
-      res.json(barChartData);
+        const barChartData = await getDataForBarChart();
+        res.json(barChartData);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-  });
+});
 
 // Rute untuk mengambil data bar chart total expenses
 app.get('/api/product-expenses-chart-data', async (req, res) => {

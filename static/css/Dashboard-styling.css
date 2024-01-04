@@ -1,14 +1,25 @@
 .chart-container {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   margin: 0 auto;
-  max-width: 80vw;
+  /* max-width: 80vw; */
+  padding: 3rem;
   justify-content: center;
+  background-color: moccasin;
 }
 .chart-container > * {
-  min-height: 400px;
+  height: 800px;
+  padding: 1rem;
+  border: 2px solid black;
+  margin: 0 1rem;
 }
 
 select {
   max-width: 20ch;
+}
+
+/* .chart-container > */
+
+canvas {
+  margin: 2rem 0;
 }
