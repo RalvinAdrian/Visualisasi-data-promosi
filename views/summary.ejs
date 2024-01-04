@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/summary.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -54,6 +55,7 @@
             </div>
         </div>
     </section>
+
     <section id="rekap-data">
         <div class="stats-row">
             <div class="info">
@@ -98,9 +100,58 @@
                             </td>
                         </tr>
                         <% }); %>
+                </table>
             </div>
         </div>
     </section>
+
+    <!-- Bar Chart Section -->
+    <section id="incomeChartSection">
+        <h2 class="title">Income Distribution by Birth Year</h2>
+        <canvas id="incomeChart" width="800" height="400"></canvas>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+          const chartData = await fetchData('/api/bar-chart-data');
+          drawBarChart(chartData);
+        });
+      
+        async function fetchData(url) {
+          const response = await fetch(url);
+          const data = await response.json();
+          return data;
+        }
+      
+        function drawBarChart(data) {
+          const ctx = document.getElementById('incomeChart').getContext('2d');
+      
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.map(entry => entry.BirthDate),
+              datasets: [{
+                label: 'Total Income',
+                backgroundColor: '#38a755',
+                data: data.map(entry => entry.totalIncome),
+              }],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                x: {
+                  beginAtZero: true,
+                },
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        }
+    </script>
+
 </body>
 
 </html>

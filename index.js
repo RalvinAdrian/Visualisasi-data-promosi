@@ -151,3 +151,33 @@ async function getBarChartData(query) {
         });
     })
 }
+// Fungsi untuk mengambil data dari database untuk bar chart pada summary
+async function getDataForBarChart() {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT BirthDate, SUM(Income) as totalIncome
+        FROM marketingdata
+        GROUP BY BirthDate
+        ORDER BY BirthDate
+      `;
+      pool.query(query, (error, results) => {
+        if (error) {
+          console.error(error);
+          reject(error);
+          return;
+        }
+        resolve(results);
+      });
+    });
+  }
+  
+  // Rute untuk mengambil data bar chart
+  app.get('/api/bar-chart-data', async (req, res) => {
+    try {
+      const barChartData = await getDataForBarChart();
+      res.json(barChartData);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
