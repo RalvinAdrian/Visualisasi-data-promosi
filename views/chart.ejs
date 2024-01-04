@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/Dashboard-styling.css">
     <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/reset.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Grafik Informasi Marketing</title>
 </head>
 
@@ -207,22 +208,19 @@
                 method: 'POST',
                 headers: {"Content-Type": "application/json; charset=UTF-8",},
                 body: param,
-            });
+            }
+        );
         const jsonparse =await fetchres.json();
         const data= jsonparse.data;
-
-        //data sudah bisa masuk tinggal dari sini kebawah
-        const labels = data.map(row => row.BirthDate);
-        const values = data.map(row => row['SUM(Income)']);
-        
-        const ctx = document.getElementById('barChart');
+        const axis=Object.keys(data[0]);
+        const ctx = document.getElementById('barChart').getContext('2d');
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: data.map(row => row[axis[0]]),
                 datasets: [{
-                    label: 'SUM(Income)',
-                    data: values,
+                    label: `${axis[1]} Group By ${axis[0]}`,
+                    data: data.map(row => row[axis[1]]),
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
@@ -235,7 +233,7 @@
                         position: 'bottom'
                     },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true 
                     }
                 }
             }
