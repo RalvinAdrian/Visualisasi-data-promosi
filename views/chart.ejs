@@ -171,13 +171,11 @@
                 datasets: [{
                     label: `${axis[1]} Group By ${axis[0]}`,
                     data: data.map(row => row[axis[1]]),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgb(255, 99, 132)',
                 }]
             },
             options: {
-                skipNull:true,
+                skipNull: true,
                 scales: {
                     x: {
                         position: 'bottom',
@@ -218,10 +216,12 @@
             data: {
                 labels: data.map(row => row[axis[0]]),
                 datasets: [{
-                    label: `${axis[1]} | ${axis[0]}`,
-                    data: data.map(row => ({ x: row[axis[0]], y: row[axis[1]] })),
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    label: `${axis[0]} | ${axis[1]}`,
+                    data: data.map(row => ({
+                        x: row[axis[0]],
+                        y: row[axis[1]],
+                        backgroundColor: 'rgb(255, 99, 132)',
+                    })),
                     borderWidth: 1
                 }]
             },
@@ -232,9 +232,11 @@
                         position: 'bottom'
                     },
                     y: {
-                        beginAtZero: true
+                        // beginAtZero: true
                     }
-                }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
             }
         });
     });
