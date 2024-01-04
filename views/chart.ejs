@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Dashboard-styling.css">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Grafik Informasi Marketing</title>
+</head>
+
+<body>
+    <header>
+        <div id="branding">
+            <img loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/3a6071372e13810f65ecec85d52f96fb48906b09d135bc111b19624d0389062a?"
+                class="img" />
+            <h1>Jovirian Marketing data</h1>
+        </div>
+        <nav id="nav-menu">
+            <a href="/summary" id="nav-btn">Summary</a>
+            <a href="/chart" id="nav-btn">Chart</a>
+            <a href="/" id="nav-btn">Home</a>
+        </nav>
+    </header>
+
+    <div class="chart-container">
+        <div class="bar-chart">
+            <form id="barform">
+                <label for="horizontalAxis">X Axis :</label>
+                <select id="horizontalAxis" name="horizontalAxis">
+                    <option value="BirthDate">BirthDate</option>
+                    <option value="Education">Education</option>
+                    <option value="MaritalStatus">MaritalStatus</option>
+                    <option value="Income">Income</option>
+                    <option value="Kidhome">Kidhome</option>
+                    <option value="Teenhome">Teenhome</option>
+                    <option value="DtCustomer">DtCustomer</option>
+                    <option value="Recency">Recency</option>
+                    <option value="MntWines">MntWines</option>
+                    <option value="MntFruits">MntFruits</option>
+                    <option value="MntMeatProducts">MntMeatProducts</option>
+                    <option value="MntFishProducts">MntFishProducts</option>
+                    <option value="MntSweetProducts">MntSweetProducts</option>
+                    <option value="MntGoldProds">MntGoldProds</option>
+                    <option value="NumDealsPurchases">NumDealsPurchases</option>
+                    <option value="NumWebPurchases">NumWebPurchases</option>
+                    <option value="NumCatalogPurchases">NumCatalogPurchases</option>
+                    <option value="NumStorePurchases">NumStorePurchases</option>
+                    <option value="NumWebVisitsMonth">NumWebVisitsMonth</option>
+                    <option value="AcceptedCmp3">AcceptedCmp3</option>
+                    <option value="AcceptedCmp4">AcceptedCmp4</option>
+                    <option value="AcceptedCmp5">AcceptedCmp5</option>
+                    <option value="AcceptedCmp1">AcceptedCmp1</option>
+                    <option value="AcceptedCmp2">AcceptedCmp2</option>
+                </select>
+
+                <label for="operation">Operasi :</label>
+                <select id="operation" name="operation">
+                    <option value="AVG">Avg</option>
+                    <option value="SUM">Sum</option>
+                    <option value="MIN">Min</option>
+                    <option value="MAX">Max</option>
+                    <option value="COUNT">Count</option>
+                </select>
+
+                <label for="verticalAxis">Y Axis :</label>
+                <select id="verticalAxis" name="verticalAxis">
+                    <option value="ID">ID</option>
+                    <option value="BirthDate">BirthDate</option>
+                    <option value="Education">Education</option>
+                    <option value="MaritalStatus">MaritalStatus</option>
+                    <option value="Income">Income</option>
+                    <option value="Kidhome">Kidhome</option>
+                    <option value="Teenhome">Teenhome</option>
+                    <option value="DtCustomer">DtCustomer</option>
+                    <option value="Recency">Recency</option>
+                    <option value="MntWines">MntWines</option>
+                    <option value="MntFruits">MntFruits</option>
+                    <option value="MntMeatProducts">MntMeatProducts</option>
+                    <option value="MntFishProducts">MntFishProducts</option>
+                    <option value="MntSweetProducts">MntSweetProducts</option>
+                    <option value="MntGoldProds">MntGoldProds</option>
+                    <option value="NumDealsPurchases">NumDealsPurchases</option>
+                    <option value="NumWebPurchases">NumWebPurchases</option>
+                    <option value="NumCatalogPurchases">NumCatalogPurchases</option>
+                    <option value="NumStorePurchases">NumStorePurchases</option>
+                    <option value="NumWebVisitsMonth">NumWebVisitsMonth</option>
+                    <option value="AcceptedCmp3">AcceptedCmp3</option>
+                    <option value="AcceptedCmp4">AcceptedCmp4</option>
+                    <option value="AcceptedCmp5">AcceptedCmp5</option>
+                    <option value="AcceptedCmp1">AcceptedCmp1</option>
+                    <option value="AcceptedCmp2">AcceptedCmp2</option>
+                    <option value="Complain">Complain</option>
+                    <option value="ZCostContact">ZCostContact</option>
+                    <option value="ZRevenue">ZRevenue</option>
+                    <option value="Response">Response</option>
+                </select>
+                <input type="submit" value="Update Bar Chart">
+            </form>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <div class="scatter-plot">
+            <form id="scatterform">
+                <label for="horizontalAxis">X Axis :</label>
+                <select id="horizontalAxis" name="horizontalAxis">
+                    <option value="Income">Income</option>
+                    <option value="MntWines">MntWines</option>
+                    <option value="MntFruits">MntFruits</option>
+                    <option value="MntMeatProducts">MntMeatProducts</option>
+                    <option value="MntFishProducts">MntFishProducts</option>
+                    <option value="MntSweetProducts">MntSweetProducts</option>
+                    <option value="MntGoldProds">MntGoldProds</option>
+                    <option value="NumDealsPurchases">NumDealsPurchases</option>
+                    <option value="NumWebPurchases">NumWebPurchases</option>
+                    <option value="NumCatalogPurchases">NumCatalogPurchases</option>
+                    <option value="NumStorePurchases">NumStorePurchases</option>
+                    <option value="NumWebVisitsMonth">NumWebVisitsMonth</option>
+                </select>
+                <label for="verticalAxis">Y Axis :</label>
+                <select id="verticalAxis" name="verticalAxis">
+                    <option value="Income">Income</option>
+                    <option value="MntWines">MntWines</option>
+                    <option value="MntFruits">MntFruits</option>
+                    <option value="MntMeatProducts">MntMeatProducts</option>
+                    <option value="MntFishProducts">MntFishProducts</option>
+                    <option value="MntSweetProducts">MntSweetProducts</option>
+                    <option value="MntGoldProds">MntGoldProds</option>
+                    <option value="NumDealsPurchases">NumDealsPurchases</option>
+                    <option value="NumWebPurchases">NumWebPurchases</option>
+                    <option value="NumCatalogPurchases">NumCatalogPurchases</option>
+                    <option value="NumStorePurchases">NumStorePurchases</option>
+                    <option value="NumWebVisitsMonth">NumWebVisitsMonth</option>
+                </select>
+                <input type="submit" value="Update Scatter plot">
+            </form>
+            <canvas id="scatterPlot"></canvas>
+        </div>
+    </div>
+</body>
+<script>
+    const barChartUpd = document.querySelector('#barform');
+    barChartUpd.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formdata = new FormData(barChartUpd)
+        const object = {};
+        formdata.forEach(function (value, key) {
+            object[key] = value;
+        });
+        const param = JSON.stringify(object);
+        const fetchres = await fetch(
+            '/updateBarchart',
+            {
+                method: 'POST',
+                headers: { "Content-Type": "application/json; charset=UTF-8", },
+                body: param,
+            }
+        );
+        const jsonparse = await fetchres.json();
+        const data = jsonparse.data;
+        const axis = Object.keys(data[0]);
+        const ctx = document.getElementById('barChart').getContext('2d');
+        if (window.barchart) window.barchart.destroy();
+        window.barchart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.map(row => row[axis[0]]),
+                datasets: [{
+                    label: `${axis[1]} Group By ${axis[0]}`,
+                    data: data.map(row => row[axis[1]]),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                skipNull:true,
+                scales: {
+                    x: {
+                        position: 'bottom',
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+
+
+    const scatterUpdateForm = document.getElementById('scatterform');
+    scatterUpdateForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formdata = new FormData(scatterUpdateForm)
+        const object = {};
+        formdata.forEach(function (value, key) {
+            object[key] = value;
+        });
+        const param = JSON.stringify(object);
+        const fetchres = await fetch(
+            '/updateScatterplot',
+            {
+                method: 'POST',
+                headers: { "Content-Type": "application/json; charset=UTF-8", },
+                body: param,
+            }
+        );
+        const jsonparse = await fetchres.json();
+        const data = jsonparse.data;
+        const axis = Object.keys(data[0]);
+        const ctx = document.getElementById('scatterPlot').getContext('2d');
+        if (window.scatterplot) window.scatterplot.destroy();
+        window.scatterplot = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                labels: data.map(row => row[axis[0]]),
+                datasets: [{
+                    label: `${axis[1]} | ${axis[0]}`,
+                    data: data.map(row => ({ x: row[axis[0]], y: row[axis[1]] })),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+</html>

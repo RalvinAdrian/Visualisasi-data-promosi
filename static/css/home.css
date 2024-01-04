@@ -10,16 +10,26 @@ header {
   padding: 2rem 0;
 }
 
+section {
+  justify-content: center;
+}
+
 #branding,
-section#main {
+section#main,
+section#summary {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
+
+section#summary {
+  flex-direction: column;
+}
+
 #branding h1 {
   margin-left: 1rem;
 }
-header a#dashboard-button {
+header a#nav-btn {
   color: #fff;
   box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.25);
   background-color: #38a755;
@@ -36,6 +46,9 @@ section#main {
 
 @media only screen and (max-width: 810px) {
   .right-col {
+    display: none;
+  }
+  header #branding h1 {
     display: none;
   }
 }
@@ -125,6 +138,6 @@ input[type='submit'] {
 
 input[type='file']::file-selector-button:hover,
 input[type='submit']:hover,
-a#dashboard-button:hover {
+a#nav-btn:hover {
   background: #25753a;
 }

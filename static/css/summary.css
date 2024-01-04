@@ -1,0 +1,82 @@
+overflow: hidden; /* Tambahkan properti overflow */
+.stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#stat-title {
+  color: white;
+}
+
+.stats-row {
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* border-radius = padding + 1 */
+.stat-items,
+.info {
+  background-color: rgb(195, 255, 222);
+  border: 3px solid black;
+  border-radius: 0.6rem;
+  padding: 1rem;
+  height: 120px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.stat-items h2 {
+  font-size: 14px;
+}
+
+.stat-items p {
+  font-weight: 400;
+  font-size: 35px;
+  text-align: center;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 4px;
+}
+#rekap-data {
+  margin: 2rem 0;
+  display: flex;
+}
+#rekap-data h2 {
+  margin-bottom: 0.4rem;
+}
+#rekap-data .info table {
+  margin: auto;
+}
+
+.info {
+  width: fit-content;
+  height: fit-content;
+}
+
+#incomeChart,
+#productExpensesChart,
+#averageSalesChart {
+  width: 100%;
+  height: 100%;
+}
+
+#incomeChart {
+  width: 80%;
+  margin: 2rem auto;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+}
