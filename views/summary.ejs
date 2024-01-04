@@ -55,103 +55,71 @@
             </div>
         </div>
     </section>
-
     <section id="rekap-data">
         <div class="stats-row">
             <div class="info">
                 <h2>Jumlah Biaya produk</h2>
-                <table>
-                    <tr>
-                        <th>Product</th>
-                        <th>Amount</th>
-                    </tr>
-                    <% if (infoPengeluaran !=null) { %>
-                        <% Object.entries(infoPengeluaran).forEach(([product, amount])=> { %>
-                            <tr>
-                                <td>
-                                    <%= product %>
-                                </td>
-                                <td>
-                                    <%= amount %>
-                                </td>
-                            </tr>
-                            <% }); %>
-                                <% } else { %>
-                                    <tr>
-                                        <td colspan="2">Data tidak ditemukan</td>
-                                    </tr>
-                                    <% } %>
-                </table>
+                <!-- Remove the table for product expenses -->
+                <canvas id="productExpensesChart"></canvas>
             </div>
             <div class="info">
                 <h2>Rata-rata penjualan dari sumber</h2>
-                <table>
-                    <tr>
-                        <th>Purchase Type</th>
-                        <th>Average</th>
-                    </tr>
-                    <% Object.entries(sourcePenjualan).forEach(([purchaseType, average])=> { %>
-                        <tr>
-                            <td>
-                                <%= purchaseType %>
-                            </td>
-                            <td>
-                                <%= average %>
-                            </td>
-                        </tr>
-                        <% }); %>
-                </table>
+                <!-- Remove the table for average sales -->
+                <canvas id="averageSalesChart"></canvas>
             </div>
         </div>
     </section>
 
-    <!-- Bar Chart Section -->
-    <section id="incomeChartSection">
-        <h2 class="title">Income Distribution by Birth Year</h2>
-        <canvas id="incomeChart" width="800" height="400"></canvas>
-    </section>
+    <canvas id="incomeChart"></canvas>
 
     <script>
         document.addEventListener('DOMContentLoaded', async function () {
-          const chartData = await fetchData('/api/bar-chart-data');
-          drawBarChart(chartData);
+            const chartData = await fetchData('/api/bar-chart-data');
+            drawBarChart('incomeChart',chartData, 'Income Chart');
+
+            const productExpensesData = await fetchData('/api/product-expenses-chart-data');
+            drawBarChart('productExpensesChart', productExpensesData, 'Total Expenses');
+
+            const averageSalesData = await fetchData('/api/average-sales-chart-data');
+            drawBarChart('averageSalesChart', averageSalesData, 'Average Sales');
         });
-      
+
         async function fetchData(url) {
-          const response = await fetch(url);
-          const data = await response.json();
-          return data;
+            const response = await fetch(url);
+            const data = await response.json();
+            return data;
         }
-      
-        function drawBarChart(data) {
-          const ctx = document.getElementById('incomeChart').getContext('2d');
-      
-          new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: data.map(entry => entry.BirthDate),
-              datasets: [{
-                label: 'Total Income',
-                backgroundColor: '#38a755',
-                data: data.map(entry => entry.totalIncome),
-              }],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                x: {
-                  beginAtZero: true,
+
+        function drawBarChart(canvasId, data, label) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            ctx.canvas.width = 600; // Set canvas width
+            ctx.canvas.height = 300; // Set canvas height
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(entry => entry.label),
+                    datasets: [{
+                        label: label,
+                        backgroundColor: '#38a755',
+                        data: data.map(entry => entry.value),
+                    }],
                 },
-                y: {
-                  beginAtZero: true,
+                options: {
+                    responsive: false, // Set responsive to false
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                        },
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
                 },
-              },
-            },
-          });
+            });
         }
     </script>
-
 </body>
 
 </html>

@@ -107,9 +107,17 @@ nav a#nav-btn:hover {
 }
 
 .info {
-  width: 300px;
-  height: fit-content;
+  width: 800px;
+  height: 400px;
   margin: 1rem;
+  overflow: hidden; /* Tambahkan properti overflow */
+}
+
+#incomeChart,
+#productExpensesChart,
+#averageSalesChart {
+  width: 100%; /* Ubah lebar menjadi 100% agar grafik dapat menyesuaikan lebar container */
+  height: 100%; /* Ubah tinggi menjadi 100% agar grafik dapat menyesuaikan tinggi container */
 }
 
 table {
@@ -132,6 +140,7 @@ table th {
 table tr:nth-child(even) {
   background-color: #e0f7fa;
 }
+
 #incomeChart {
   width: 80%;
   margin: 2rem auto;
