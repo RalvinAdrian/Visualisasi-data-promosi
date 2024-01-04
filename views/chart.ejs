@@ -27,7 +27,7 @@
 
     <div class="chart-container">
         <div class="bar-chart">
-            <form action="/updateBarchart" method="POST">
+            <form id="barform">
                 <label for="horizontalAxis">X Axis :</label>
                 <select id="horizontalAxis" name="horizontalAxis">
                     <option value="ID">ID</option>
@@ -192,36 +192,55 @@
     </div>
 </body>
 <script>
-    const data = JSON.parse('<%- JSON.stringify(data) %>');
+    const barChartUpd=document.querySelector('#barform');
+    barChartUpd.addEventListener('submit', async(e) => {
+        e.preventDefault();
+        const formdata = new FormData(barChartUpd)
+        const object = {};
+        formdata.forEach(function(value, key){
+            object[key] = value;
+        });
+        const param = JSON.stringify(object);
+        const fetchres=await fetch(
+            '/updateBarchart',
+            {
+                method: 'POST',
+                headers: {"Content-Type": "application/json; charset=UTF-8",},
+                body: param,
+            });
+        const jsonparse =await fetchres.json();
+        const data= jsonparse.data;
 
-    const labels = data.map(row => row.BirthDate);
-    const values = data.map(row => row['SUM(Income)']);
-
-    const ctx = document.getElementById('myBarChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'SUM(Income)',
-                data: values,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom'
-                },
-                y: {
-                    beginAtZero: true
+        //data sudah bisa masuk tinggal dari sini kebawah
+        const labels = data.map(row => row.BirthDate);
+        const values = data.map(row => row['SUM(Income)']);
+        
+        const ctx = document.getElementById('barChart');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'SUM(Income)',
+                    data: values,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
+        });
     });
-</script>
+    </script>
 
 </html>

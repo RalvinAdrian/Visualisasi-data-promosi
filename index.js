@@ -143,13 +143,14 @@ app.post('/updateBarchart', async (req, res) => {
 
     let barData = await getBarChartData(query);
     // ini kirim ke frontend bentuk jSON, process dari frontend
-    res.render('chart', { data: barData });
+    // res.render('chart', { data: barData });
+    res.json({ data: barData });
 })
 
 async function getBarChartData(query) {
     return new Promise((resolve, reject) => {
         pool.query(query, (error, results) => {
-            console.log(results)
+            // console.log(results)
             if (error) {
                 console.error(error);
                 reject(error);
