@@ -76,12 +76,16 @@
         document.addEventListener('DOMContentLoaded', async function () {
             const chartData = await fetchData('/api/bar-chart-data');
             drawBarChart('incomeChart',chartData, 'Income Chart');
+            //console.log(chartData);
 
             const productExpensesData = await fetchData('/api/product-expenses-chart-data');
             drawBarChart('productExpensesChart', productExpensesData, 'Total Expenses');
+            //console.log(productExpensesData);
 
             const averageSalesData = await fetchData('/api/average-sales-chart-data');
             drawBarChart('averageSalesChart', averageSalesData, 'Average Sales');
+            //console.log(averageSalesData);
+
         });
 
         async function fetchData(url) {
@@ -94,15 +98,15 @@
             const ctx = document.getElementById(canvasId).getContext('2d');
             ctx.canvas.width = 600; // Set canvas width
             ctx.canvas.height = 300; // Set canvas height
-
+            const axis=Object.keys(data[0]);
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: data.map(entry => entry.label),
+                    labels: data.map(row => row[axis[0]]),
                     datasets: [{
                         label: label,
                         backgroundColor: '#38a755',
-                        data: data.map(entry => entry.value),
+                        data: data.map(row => row[axis[1]]),
                     }],
                 },
                 options: {
