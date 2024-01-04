@@ -39,7 +39,7 @@
                 <p>
                     52247
                 </p>
-                <h2>Rata-rata income dalam US Dollar</h2>
+                <h2>Rata-rata income customer (USD)</h2>
             </div>
             <div class="stat-items">
                 <p>
@@ -63,29 +63,19 @@
                 <canvas id="productExpensesChart"></canvas>
             </div>
             <div class="info">
-                <h2>Rata-rata penjualan dari sumber</h2>
+                <h2>Rata-rata penjualan</h2>
                 <!-- Remove the table for average sales -->
                 <canvas id="averageSalesChart"></canvas>
             </div>
         </div>
     </section>
 
-    <canvas id="incomeChart"></canvas>
-
     <script>
         document.addEventListener('DOMContentLoaded', async function () {
-            const chartData = await fetchData('/api/bar-chart-data');
-            drawBarChart('incomeChart',chartData, 'Income Chart');
-            //console.log(chartData);
-
             const productExpensesData = await fetchData('/api/product-expenses-chart-data');
             drawBarChart('productExpensesChart', productExpensesData, 'Total Expenses');
-            //console.log(productExpensesData);
-
             const averageSalesData = await fetchData('/api/average-sales-chart-data');
             drawBarChart('averageSalesChart', averageSalesData, 'Average Sales');
-            //console.log(averageSalesData);
-
         });
 
         async function fetchData(url) {
@@ -96,9 +86,9 @@
 
         function drawBarChart(canvasId, data, label) {
             const ctx = document.getElementById(canvasId).getContext('2d');
-            ctx.canvas.width = 600; // Set canvas width
-            ctx.canvas.height = 300; // Set canvas height
-            const axis=Object.keys(data[0]);
+            ctx.canvas.width = 700; // Set canvas width
+            ctx.canvas.height = 400; // Set canvas height
+            const axis = Object.keys(data[0]);
             new Chart(ctx, {
                 type: 'bar',
                 data: {

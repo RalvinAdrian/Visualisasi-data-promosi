@@ -1,144 +1,76 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
-}
-
-header {
-  background-color: #38a755;
-  color: #fff;
-  padding: 2rem 0;
+overflow: hidden; /* Tambahkan properti overflow */
+.stats {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  max-width: 80vw;
-  margin: 0 auto;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-header #branding img {
-  max-width: 50px;
-  border-radius: 50%;
-}
-
-header #branding h1 {
-  margin-left: 1rem;
-}
-
-nav #nav-menu {
-  display: flex;
-}
-
-nav a#nav-btn {
-  text-decoration: none;
-  color: #fff;
-  background-color: #25753a;
-  margin: 0 10px;
-  padding: 0.8rem 1.5rem;
-  border-radius: 2rem;
-  font: 700 16px 'Poppins', sans-serif;
-  transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-}
-
-nav a#nav-btn:hover {
-  background: #1e532a;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-#summary {
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 20px;
-  margin: 2rem 0;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.title {
-  margin-bottom: 2rem;
-  color: #38a755;
-  text-align: center;
+#stat-title {
+  color: white;
 }
 
 .stats-row {
+  margin: 0.5rem;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
+/* border-radius = padding + 1 */
 .stat-items,
 .info {
-  background-color: #e0f7fa;
-  border: 3px solid #25753a;
-  border-radius: 10px;
-  padding: 1.5rem;
-  height: 150px;
+  background-color: rgb(195, 255, 222);
+  border: 3px solid black;
+  border-radius: 0.6rem;
+  padding: 1rem;
+  height: 120px;
   width: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  margin: 1rem;
-  transition: transform 0.3s ease-in-out;
-}
-
-.stat-items:hover,
-.info:hover {
-  transform: scale(1.05);
 }
 
 .stat-items h2 {
-  font-size: 18px;
-  color: #25753a;
-  text-align: center;
+  font-size: 14px;
 }
 
 .stat-items p {
-  font-weight: 600;
-  font-size: 28px;
+  font-weight: 400;
+  font-size: 35px;
   text-align: center;
-  color: #25753a;
-  margin: 0;
 }
 
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 4px;
+}
 #rekap-data {
+  margin: 2rem 0;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+}
+#rekap-data h2 {
+  margin-bottom: 0.4rem;
+}
+#rekap-data .info table {
+  margin: auto;
 }
 
 .info {
-  width: 800px;
-  height: 400px;
-  margin: 1rem;
-  overflow: hidden; /* Tambahkan properti overflow */
+  width: fit-content;
+  height: fit-content;
 }
 
 #incomeChart,
 #productExpensesChart,
 #averageSalesChart {
-  width: 100%; /* Ubah lebar menjadi 100% agar grafik dapat menyesuaikan lebar container */
-  height: 100%; /* Ubah tinggi menjadi 100% agar grafik dapat menyesuaikan tinggi container */
-}
-
-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-table, th, td {
-  border: 1px solid #25753a;
-  padding: 10px;
-  text-align: left;
-}
-
-table th {
-  background-color: #38a755;
-  color: #fff;
-}
-
-table tr:nth-child(even) {
-  background-color: #e0f7fa;
+  height: 100%;
 }
 
 #incomeChart {
