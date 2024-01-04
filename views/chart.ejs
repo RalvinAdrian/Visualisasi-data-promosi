@@ -191,7 +191,7 @@
     });
 
 
-    const scatterUpdateForm = document.getElementById('scatterPlot');
+    const scatterUpdateForm = document.getElementById('scatterform');
     scatterUpdateForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formdata = new FormData(scatterUpdateForm)
@@ -210,17 +210,15 @@
         );
         const jsonparse = await fetchres.json();
         const data = jsonparse.data;
-        console.log(data.map(row => ({ x: row[axis[0]], y: row[axis[1]] })))
         const axis = Object.keys(data[0]);
         const ctx = document.getElementById('scatterPlot').getContext('2d');
-        // if (window.barchart) window.barchart.destroy();
-        console.log(window.barchart)
-        new Chart(ctx, {
+        if (window.scatterplot) window.scatterplot.destroy();
+        window.scatterplot = new Chart(ctx, {
             type: 'scatter',
             data: {
                 labels: data.map(row => row[axis[0]]),
                 datasets: [{
-                    label: `${axis[1]} Group By ${axis[0]}`,
+                    label: `${axis[1]} | ${axis[0]}`,
                     data: data.map(row => ({ x: row[axis[0]], y: row[axis[1]] })),
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',

@@ -163,7 +163,6 @@ async function getBarChartData(query) {
 
 app.post('/updateScatterplot', async (req, res) => {
     const horizontalAxis = req.body.horizontalAxis;
-    const operation = req.body.operation;
     const verticalAxis = req.body.verticalAxis;
 
     // buat querynya :
